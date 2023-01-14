@@ -66,14 +66,14 @@ def add_token_positions(val, answers, tokenizer):
     end_positions = []
     for i in range(len(answers)):
         # val.char_to_token(i, answers[i]['answer_start']) is the start_pos and it can be none
-        start_positions.append(val.char_to_token(i, answers[i]['answer_start']))
+        start_positions.append(val.char_to_token(i, answers[i]['answer_start'], sequence_index=1))
 
         #this should not exist
         if(answers[i]['answer_end']==0):
             Exception('error...')
             #end_positions.append(val.char_to_token(i, answers[i]['answer_end'])) 
         else:
-            end_positions.append(val.char_to_token(i, answers[i]['answer_end'] - 1))
+            end_positions.append(val.char_to_token(i, answers[i]['answer_end'] - 1, sequence_index=1))
 
          # if None, the answer passage has been truncated
          # Here is not a good approach
