@@ -89,7 +89,7 @@ def add_token_positions(val, answers, tokenizer):
 
 def prepare_model(trainSet,valSet,tokenizer):
 
-    model = BertForQuestionAnswering.from_pretrained('bert-large-uncased', cache_dir="bert_base/")
+    model = BertForQuestionAnswering.from_pretrained('bert-base-uncased', cache_dir="bert_base/")
     #model = LongformerForQuestionAnswering.from_pretrained('allenai/longformer-base-4096', cache_dir="longformer/")
     model.cuda()
 
@@ -139,7 +139,7 @@ def main():
     val_dir = 'data/quac_dev.json' 
     dataset = load_process_data(train_dir, val_dir)
 
-    tokenizer = BertTokenizerFast.from_pretrained('bert-large-uncased', cache_dir="bert_base/")
+    tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased', cache_dir="bert_base/")
     #tokenizer = LongformerTokenizerFast.from_pretrained('allenai/longformer-base-4096', cache_dir="longformer/")
 
     def encode(examples):
@@ -147,7 +147,7 @@ def main():
       encoding = tokenizer(examples["questions"], examples["docs"], truncation=True, padding="max_length",
                        max_length=512, return_special_tokens_mask=True)
 
-      start_positions, end_positions = add_token_positions(encoding, examples["answers"])
+      start_positions, end_positions = add_token_positions(encoding, examples["answers"], tokenizer)
       encoding.update({'start_positions': start_positions, 'end_positions': end_positions})
       return encoding
 
